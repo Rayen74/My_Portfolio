@@ -1,5 +1,6 @@
-[build.environment]
-  NODE_VERSION = "18"
 [build]
   command = "npm ci --include=optional && npm run build"
-  publish = "dist"  
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
