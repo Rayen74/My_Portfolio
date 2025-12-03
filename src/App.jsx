@@ -10,7 +10,7 @@ import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 
 function App() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   return (
     <CollapsedContext.Provider value={{ collapsed, setCollapsed }}>
