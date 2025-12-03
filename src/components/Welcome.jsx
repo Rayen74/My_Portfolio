@@ -21,8 +21,6 @@ import PostgreSQLIcon from '../assets/pg.png';
 import PrismaIcon from '../assets/prisma.png';
 import HTML5Icon from '../assets/HTML5.png';
 import CSS3Icon from '../assets/CSS3.png';
-import PHPIcon from '../assets/PHP.png';
-import LaravelIcon from '../assets/laravel.png';
 import MongoDBIcon from '../assets/mongodb.png';
 
 // ADDED: Import CV
