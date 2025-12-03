@@ -1,4 +1,4 @@
-// Updated Sidebar.jsx
+// Sidebar.jsx
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import {
@@ -10,7 +10,7 @@ import {
   UserIcon,
 } from "@heroicons/react/24/solid";
 import { CollapsedContext } from "../CollapsedContext";
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Sidebar = () => {
   const { collapsed, setCollapsed } = useContext(CollapsedContext);
@@ -32,14 +32,12 @@ const Sidebar = () => {
           transition={{ duration: 0.8 }}
           className="relative inline-block"
         >
-          {!collapsed && (
-            <h2
-              className="absolute inset-0 text-xl font-extrabold select-none text-cyan-400 filter blur-md animate-pulse"
-              title="My Portfolio"
-            >
-              My Portfolio
-            </h2>
-          )}
+          <h2
+            className="absolute inset-0 hidden text-xl font-extrabold select-none text-cyan-400 filter blur-md animate-pulse md:block"
+            title="My Portfolio"
+          >
+            My Portfolio
+          </h2>
           <h2 className="relative text-xl font-extrabold select-none text-cyan-400 neon-glow animate-glitch">
             My Portfolio
           </h2>
@@ -82,34 +80,37 @@ const Sidebar = () => {
       </div>
 
       {/* Mobile Dropdown Menu */}
-      {!collapsed && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="md:hidden"
-        >
-          <div className="flex flex-col px-4 pb-4">
-            {menuItems.map(({ id, name, icon: Icon, path }) => (
-              <NavLink
-                key={id}
-                to={path}
-                className={({ isActive }) =>
-                  `flex items-center px-3 py-2 rounded-md transition-colors duration-200 group ${
-                    isActive
-                      ? "bg-gray-800 text-cyan-400 shadow-md neon-glow animate-glitch"
-                      : "text-gray-300 hover:bg-gray-800 hover:text-cyan-300 neon-glow"
-                  }`
-                }
-                onClick={() => setCollapsed(true)} // Close menu on click
-              >
-                <Icon className="w-5 h-5 mr-2 group-hover:animate-pulse" aria-hidden="true" />
-                <span className="text-base font-medium">{name}</span>
-              </NavLink>
-            ))}
-          </div>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {!collapsed && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden bg-gray-900 md:hidden"
+          >
+            <div className="flex flex-col px-4 pb-4 space-y-2">
+              {menuItems.map(({ id, name, icon: Icon, path }) => (
+                <NavLink
+                  key={id}
+                  to={path}
+                  className={({ isActive }) =>
+                    `flex items-center px-3 py-2 rounded-md transition-colors duration-200 group ${
+                      isActive
+                        ? "bg-gray-800 text-cyan-400 shadow-md neon-glow animate-glitch"
+                        : "text-gray-300 hover:bg-gray-800 hover:text-cyan-300 neon-glow"
+                    }`
+                  }
+                  onClick={() => setCollapsed(true)} // Close menu on click
+                >
+                  <Icon className="w-5 h-5 mr-2 group-hover:animate-pulse" aria-hidden="true" />
+                  <span className="text-base font-medium">{name}</span>
+                </NavLink>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
