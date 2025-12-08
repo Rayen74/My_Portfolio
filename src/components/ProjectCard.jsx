@@ -120,7 +120,7 @@ const ProjectCard = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="flex flex-col h-full overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black border-4 border-[#FF00FF] rounded-3xl shadow-2xl neon-pink-glow hover:shadow-[0_0_40px_rgba(255,0,255,0.6)] hover:scale-105 transition-all duration-500"
+      className="flex flex-col h-full overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black border-2 sm:border-4 border-[#FF00FF] rounded-2xl sm:rounded-3xl shadow-2xl neon-pink-glow hover:shadow-[0_0_40px_rgba(255,0,255,0.6)] hover:scale-105 transition-all duration-500"
     >
       <style>
         {`
@@ -133,14 +133,14 @@ const ProjectCard = ({
       </style>
 
       {/* Media Preview */}
-      <div className="relative h-56 group">
+      <div className="relative h-48 sm:h-56 md:h-64 group">
         {mediaType === 'video' ? (
           <video 
             ref={videoRef} 
             src={mediaSrc} 
             muted 
             loop={false}
-            className="object-cover w-full h-full rounded-t-3xl"
+            className="object-cover w-full h-full rounded-t-2xl sm:rounded-t-3xl"
             style={{ transform: 'scale(0.85)', transformOrigin: 'center' }} 
           />
         ) : (
@@ -148,33 +148,33 @@ const ProjectCard = ({
             src={mediaSrc} 
             alt={title} 
             style={{ transform: 'scale(0.9)', transformOrigin: 'center' }} 
-            className="object-cover w-full h-full rounded-t-3xl" 
+            className="object-cover w-full h-full rounded-t-2xl sm:rounded-t-3xl" 
           />
         )}
 
-        <div className="absolute inset-0 transition-opacity duration-300 bg-gradient-to-t from-gray-900/80 to-transparent rounded-t-3xl" />
+        <div className="absolute inset-0 transition-opacity duration-300 bg-gradient-to-t from-gray-900/80 to-transparent rounded-t-2xl sm:rounded-t-3xl" />
 
         {/* Play/Pause Button */}
         {mediaType === 'video' && (
           <button
             onClick={togglePlay}
-            className="absolute z-10 p-3 text-[#FF00FF] transition-all duration-200 border-2 border-[#FF00FF] rounded-full bottom-4 right-4 bg-gray-800/80 hover:bg-[#FF00FF]/30 hover:text-[#FF69B4] backdrop-blur-sm"
+            className="absolute z-10 p-2 text-[#FF00FF] transition-all duration-200 border border-[#FF00FF] sm:border-2 rounded-full bottom-3 right-3 sm:bottom-4 sm:right-4 sm:p-3 bg-gray-800/80 hover:bg-[#FF00FF]/30 hover:text-[#FF69B4] backdrop-blur-sm"
             aria-label={isPlaying ? 'Pause video' : 'Play video'}
           >
-            {isPlaying ? <FaPause className="w-5 h-5" /> : <FaPlay className="w-5 h-5" />}
+            {isPlaying ? <FaPause className="w-4 h-4 sm:w-5 sm:h-5" /> : <FaPlay className="w-4 h-4 sm:w-5 sm:h-5" />}
           </button>
         )}
 
-        {/* Gallery Icon Only - Hover to enlarge */}
+        {/* Gallery Icon */}
         {galleryImages.length > 0 && (
           <motion.button
-            whileHover={{ scale: 1.3 }}
+            whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}
             onClick={openGallery}
-            className="absolute z-20 p-4 transition-all duration-300 border-2 rounded-full text-cyan-400 bg-gray-900/70 border-cyan-500/50 bottom-6 left-6 backdrop-blur-md hover:bg-cyan-500/20 hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-400/50"
+            className="absolute z-20 p-2 transition-all duration-300 border rounded-full sm:p-3 md:p-4 text-cyan-400 bg-gray-900/70 border-cyan-500/50 bottom-3 left-3 sm:bottom-4 sm:left-4 md:bottom-6 md:left-6 backdrop-blur-md hover:bg-cyan-500/20 hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-400/50"
             aria-label="View gallery"
           >
-            <FaImages className="w-7 h-7 drop-shadow-lg" />
+            <FaImages className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 drop-shadow-lg" />
             <span className="absolute text-xs font-bold transition-opacity -translate-x-1/2 opacity-0 -top-8 left-1/2 text-cyan-300 group-hover:opacity-100">
               {galleryImages.length} images
             </span>
@@ -183,26 +183,26 @@ const ProjectCard = ({
       </div>
 
       {/* Content */}
-      <div className="flex flex-col flex-1 p-8">
-        <div className="relative inline-block mb-4">
-          <h3 className="absolute inset-0 text-xl font-bold text-cyan-400 filter blur-md animate-pulse">
+      <div className="flex flex-col flex-1 p-4 sm:p-6 md:p-8">
+        <div className="relative inline-block mb-3 sm:mb-4">
+          <h3 className="absolute inset-0 text-base font-bold sm:text-lg md:text-xl text-cyan-400 filter blur-md animate-pulse">
             {title}
           </h3>
-          <h3 className="relative text-xl font-bold text-transparent bg-gradient-to-r from-cyan-400 to-pink-400 bg-clip-text animate-glitch">
+          <h3 className="relative text-base font-bold text-transparent sm:text-lg md:text-xl bg-gradient-to-r from-cyan-400 to-pink-400 bg-clip-text animate-glitch">
             {title}
           </h3>
         </div>
 
-        <p className="flex-1 mb-6 text-base leading-relaxed text-gray-200 line-clamp-9">
+        <p className="flex-1 mb-4 text-xs leading-relaxed text-gray-200 sm:text-sm md:text-base sm:mb-6 line-clamp-6 sm:line-clamp-9">
           {description}
         </p>
 
         <div className="mt-auto">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {technologies.map((tech, index) => (
               <span
                 key={index}
-                className="px-4 py-2 text-sm font-medium transition-all duration-200 bg-gray-800/70 border rounded-full text-cyan-300 border-[#FF00FF]/30 hover:bg-[#FF00FF]/20 hover:text-[#FF69B4] hover:scale-105"
+                className="px-2 py-1 text-xs font-medium transition-all duration-200 sm:px-3 sm:py-1.5 md:px-4 md:py-2 sm:text-sm bg-gray-800/70 border rounded-full text-cyan-300 border-[#FF00FF]/30 hover:bg-[#FF00FF]/20 hover:text-[#FF69B4] hover:scale-105"
               >
                 {tech}
               </span>
@@ -211,14 +211,14 @@ const ProjectCard = ({
         </div>
       </div>
 
-      {/* GALLERY MODAL - With Zoom In Animation */}
+      {/* GALLERY MODAL */}
       <AnimatePresence>
         {showGallery && galleryImages.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-2xl"
+            className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/95 backdrop-blur-2xl"
             onClick={() => setShowGallery(false)}
           >
             <motion.div
@@ -226,63 +226,63 @@ const ProjectCard = ({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className={`relative w-full max-w-7xl max-h-[95vh] bg-gray-900 rounded-3xl overflow-hidden border-4 border-cyan-500/50 shadow-2xl ${fullscreen ? 'fixed inset-0 rounded-none' : ''}`}
+              className={`relative w-full max-w-7xl max-h-[95vh] bg-gray-900 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden border-2 sm:border-4 border-cyan-500/50 shadow-2xl ${fullscreen ? 'fixed inset-0 rounded-none' : ''}`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b bg-gradient-to-r from-gray-800 to-gray-900 border-cyan-500/30">
-                <div className="flex items-center gap-4">
-                  <FaImages className="w-8 h-8 text-cyan-400" />
+              <div className="flex flex-col gap-3 p-3 border-b sm:flex-row sm:items-center sm:justify-between sm:p-4 md:p-6 bg-gradient-to-r from-gray-800 to-gray-900 border-cyan-500/30">
+                <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                  <FaImages className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-cyan-400" />
                   <div>
-                    <h3 className="text-2xl font-bold text-transparent bg-gradient-to-r from-cyan-400 to-pink-400 bg-clip-text">
+                    <h3 className="text-base font-bold text-transparent sm:text-lg md:text-2xl bg-gradient-to-r from-cyan-400 to-pink-400 bg-clip-text">
                       {title}
                     </h3>
-                    <p className="text-gray-400">
+                    <p className="text-xs text-gray-400 sm:text-sm">
                       Image {currentIndex + 1} / {galleryImages.length}
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 md:gap-3">
                   {/* Zoom Controls */}
                   <button 
                     onClick={zoomOut}
                     disabled={zoom <= 1}
-                    className={`p-3 transition rounded-xl ${zoom <= 1 ? 'bg-gray-800/50 text-gray-600 cursor-not-allowed' : 'bg-gray-700/80 hover:bg-gray-600 text-white'}`}
+                    className={`p-2 sm:p-2.5 md:p-3 transition rounded-lg sm:rounded-xl ${zoom <= 1 ? 'bg-gray-800/50 text-gray-600 cursor-not-allowed' : 'bg-gray-700/80 hover:bg-gray-600 text-white'}`}
                     aria-label="Zoom out"
                   >
-                    <FaSearchMinus className="w-5 h-5" />
+                    <FaSearchMinus className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
                   </button>
-                  <div className="flex items-center px-4 text-white bg-gray-700/80 rounded-xl">
-                    <span className="font-mono text-sm">{Math.round(zoom * 100)}%</span>
+                  <div className="flex items-center px-2 text-xs text-white rounded-lg sm:px-3 sm:text-sm bg-gray-700/80 sm:rounded-xl">
+                    <span className="font-mono">{Math.round(zoom * 100)}%</span>
                   </div>
                   <button 
                     onClick={zoomIn}
                     disabled={zoom >= 3}
-                    className={`p-3 transition rounded-xl ${zoom >= 3 ? 'bg-gray-800/50 text-gray-600 cursor-not-allowed' : 'bg-gray-700/80 hover:bg-gray-600 text-white'}`}
+                    className={`p-2 sm:p-2.5 md:p-3 transition rounded-lg sm:rounded-xl ${zoom >= 3 ? 'bg-gray-800/50 text-gray-600 cursor-not-allowed' : 'bg-gray-700/80 hover:bg-gray-600 text-white'}`}
                     aria-label="Zoom in"
                   >
-                    <FaSearchPlus className="w-5 h-5" />
+                    <FaSearchPlus className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
                   </button>
                   <button 
                     onClick={() => setFullscreen(!fullscreen)} 
-                    className="p-3 transition bg-gray-700/80 rounded-xl hover:bg-gray-600"
+                    className="p-2 transition sm:p-2.5 md:p-3 bg-gray-700/80 rounded-lg sm:rounded-xl hover:bg-gray-600"
                     aria-label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
                   >
-                    {fullscreen ? <FaCompressAlt className="w-5 h-5 text-white" /> : <FaExpandAlt className="w-5 h-5 text-white" />}
+                    {fullscreen ? <FaCompressAlt className="w-3 h-3 text-white sm:w-4 sm:h-4 md:w-5 md:h-5" /> : <FaExpandAlt className="w-3 h-3 text-white sm:w-4 sm:h-4 md:w-5 md:h-5" />}
                   </button>
                   <button 
                     onClick={() => setShowGallery(false)} 
-                    className="p-3 transition bg-red-600/80 rounded-xl hover:bg-red-600"
+                    className="p-2 transition sm:p-2.5 md:p-3 bg-red-600/80 rounded-lg sm:rounded-xl hover:bg-red-600"
                     aria-label="Close gallery"
                   >
-                    <FaTimes className="w-5 h-5 text-white" />
+                    <FaTimes className="w-3 h-3 text-white sm:w-4 sm:h-4 md:w-5 md:h-5" />
                   </button>
                 </div>
               </div>
 
               {/* Image Viewer */}
               <div 
-                className="relative h-[70vh] md:h-[80vh] bg-black flex items-center justify-center overflow-hidden"
+                className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] bg-black flex items-center justify-center overflow-hidden"
                 onWheel={handleWheel}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
@@ -309,23 +309,23 @@ const ProjectCard = ({
                 {/* Navigation */}
                 {galleryImages.length > 1 && (
                   <>
-                    <button onClick={prev} className="absolute z-10 p-4 transition -translate-y-1/2 rounded-full left-6 top-1/2 bg-black/60 backdrop-blur hover:bg-black/80">
-                      <FaArrowLeft className="w-6 h-6 text-white" />
+                    <button onClick={prev} className="absolute z-10 p-2 transition -translate-y-1/2 rounded-full sm:p-3 md:p-4 left-2 sm:left-4 md:left-6 top-1/2 bg-black/60 backdrop-blur hover:bg-black/80">
+                      <FaArrowLeft className="w-4 h-4 text-white sm:w-5 sm:h-5 md:w-6 md:h-6" />
                     </button>
-                    <button onClick={next} className="absolute z-10 p-4 transition -translate-y-1/2 rounded-full right-6 top-1/2 bg-black/60 backdrop-blur hover:bg-black/80">
-                      <FaArrowRight className="w-6 h-6 text-white" />
+                    <button onClick={next} className="absolute z-10 p-2 transition -translate-y-1/2 rounded-full sm:p-3 md:p-4 right-2 sm:right-4 md:right-6 top-1/2 bg-black/60 backdrop-blur hover:bg-black/80">
+                      <FaArrowRight className="w-4 h-4 text-white sm:w-5 sm:h-5 md:w-6 md:h-6" />
                     </button>
                   </>
                 )}
 
                 {/* Dots */}
                 {galleryImages.length > 1 && (
-                  <div className="absolute z-10 flex gap-2 -translate-x-1/2 bottom-6 left-1/2">
+                  <div className="absolute z-10 flex gap-1.5 sm:gap-2 -translate-x-1/2 bottom-3 sm:bottom-4 md:bottom-6 left-1/2">
                     {galleryImages.map((_, i) => (
                       <div
                         key={i}
                         onClick={() => setCurrentIndex(i)}
-                        className={`h-2 rounded-full cursor-pointer transition-all ${i === currentIndex ? 'w-10 bg-cyan-400' : 'w-2 bg-gray-600'}`}
+                        className={`h-1.5 sm:h-2 rounded-full cursor-pointer transition-all ${i === currentIndex ? 'w-6 sm:w-8 md:w-10 bg-cyan-400' : 'w-1.5 sm:w-2 bg-gray-600'}`}
                       />
                     ))}
                   </div>
@@ -333,8 +333,9 @@ const ProjectCard = ({
 
                 {/* Zoom Instructions */}
                 {zoom === 1 && (
-                  <div className="absolute px-4 py-2 text-sm text-gray-400 transition-opacity -translate-x-1/2 rounded-lg bg-black/70 top-6 left-1/2 backdrop-blur">
-                    Use mouse wheel or +/- buttons to zoom • Drag to pan when zoomed
+                  <div className="absolute px-2 py-1 text-xs text-gray-400 transition-opacity -translate-x-1/2 rounded-lg sm:px-3 sm:py-2 sm:text-sm bg-black/70 top-3 sm:top-4 md:top-6 left-1/2 backdrop-blur">
+                    <span className="hidden sm:inline">Use mouse wheel or +/- buttons to zoom • Drag to pan when zoomed</span>
+                    <span className="sm:hidden">Pinch to zoom</span>
                   </div>
                 )}
               </div>
