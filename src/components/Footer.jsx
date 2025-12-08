@@ -1,3 +1,4 @@
+// src/components/Footer.jsx
 import React, { useState } from 'react';
 import { FaGithub, FaInstagram, FaFacebook, FaLinkedinIn } from 'react-icons/fa';
 import { MdEmail, MdPhone } from 'react-icons/md';
@@ -18,7 +19,7 @@ const Footer = () => {
     setRedirect({
       show: true,
       url: socialLinks[platform],
-      platform: platform
+      platform
     });
   };
 
@@ -27,7 +28,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative py-10 overflow-hidden text-white bg-gray-900">
+    <footer className="relative py-12 overflow-hidden text-white bg-gray-900 md:py-16">
       <AnimatePresence>
         {redirect.show && (
           <Redirect
@@ -38,71 +39,99 @@ const Footer = () => {
         )}
       </AnimatePresence>
 
-      {/* Subtle cyberpunk background grid */}
+      {/* Subtle cyberpunk grid background */}
       <div
         className="absolute inset-0 pointer-events-none opacity-10"
         style={{
           backgroundImage: `radial-gradient(#00FFAA 1px, transparent 1px)`,
           backgroundSize: '20px 20px',
         }}
-      ></div>
+      />
 
-      <div className="max-w-4xl px-4 mx-auto text-center">
+      <div className="relative z-10 max-w-5xl px-6 mx-auto text-center">
+        {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative inline-block mb-6"
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="relative inline-block mb-8"
         >
-          <h2 className="absolute inset-0 text-3xl font-bold text-cyan-400 filter blur-md animate-pulse">
+          <h2 className="absolute inset-0 text-3xl font-bold sm:text-4xl text-cyan-400 filter blur-md animate-pulse">
             Get in touch
           </h2>
-          <h2 className="relative text-3xl font-bold text-cyan-400 neon-glow animate-glitch">
+          <h2 className="relative text-3xl font-bold sm:text-4xl text-cyan-400 neon-glow animate-glitch">
             Get in touch
           </h2>
         </motion.div>
-        <p className="mb-6 text-gray-200 neon-glow">
+
+        <p className="max-w-2xl mx-auto mb-10 text-sm leading-relaxed text-gray-200 sm:text-base md:text-lg neon-glow">
           What's next? Feel free to reach out to me if you're looking for a developer, have a query, or simply want to connect.
         </p>
-        <div className="flex flex-col items-center mb-6 space-y-3">
-          <div className="flex items-center gap-3 text-sm font-medium md:text-base group">
-            <MdEmail className="w-6 h-6 text-cyan-500 group-hover:animate-pulse" />
-            <a href="mailto:rayenchaaben0704@gmail.com" className="neon-glow text-cyan-300 group-hover:text-cyan-100">
+
+        {/* Contact Info */}
+        <div className="flex flex-col items-center gap-6 mb-10">
+          {/* Email */}
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+            <MdEmail className="w-7 h-7 text-cyan-500" />
+            <a
+              href="mailto:rayenchaaben0704@gmail.com"
+              className="text-sm break-all text-cyan-300 neon-glow hover:text-cyan-100 sm:text-base"
+            >
               rayenchaaben0704@gmail.com
             </a>
           </div>
-          <div className="flex items-center gap-3 text-sm font-medium md:text-base group">
-            <MdPhone className="w-6 h-6 text-pink-500 group-hover:animate-pulse" />
-            <span className="text-gray-200 neon-glow group-hover:text-pink-300">+216 53410040</span>
+
+          {/* Phone */}
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+            <MdPhone className="text-pink-500 w-7 h-7" />
+            <span className="text-sm text-gray-200 neon-glow hover:text-pink-300 sm:text-base">
+              +216 53410040
+            </span>
           </div>
         </div>
-        <p className="mb-4 text-gray-200 neon-glow">You may also find me on these platforms!</p>
-        <div className="flex justify-center space-x-4">
+
+        {/* Social Platforms Text */}
+        <p className="mb-6 text-sm text-gray-300 sm:text-base neon-glow">
+          You may also find me on these platforms!
+        </p>
+
+        {/* Social Icons */}
+        <div className="flex justify-center gap-8 mb-8">
           <button
             onClick={() => handleSocialClick('github')}
-            className="text-cyan-400 hover:text-cyan-300 neon-glow group"
+            aria-label="Visit GitHub profile"
+            className="transition-transform text-cyan-400 hover:text-cyan-300 hover:scale-110 neon-glow group"
           >
-            <FaGithub className="w-6 h-6 group-hover:animate-pulse" />
+            <FaGithub className="w-8 h-8 group-hover:animate-pulse" />
           </button>
           <button
             onClick={() => handleSocialClick('linkedin')}
-            className="text-cyan-400 hover:text-cyan-300 neon-glow group"
+            aria-label="Visit LinkedIn profile"
+            className="transition-transform text-cyan-400 hover:text-cyan-300 hover:scale-110 neon-glow group"
           >
-            <FaLinkedinIn className="w-6 h-6 group-hover:animate-pulse" />
+            <FaLinkedinIn className="w-8 h-8 group-hover:animate-pulse" />
           </button>
           <button
             onClick={() => handleSocialClick('instagram')}
-            className="text-cyan-400 hover:text-cyan-300 neon-glow group"
+            aria-label="Visit Instagram profile"
+            className="transition-transform text-cyan-400 hover:text-cyan-300 hover:scale-110 neon-glow group"
           >
-            <FaInstagram className="w-6 h-6 group-hover:animate-pulse" />
+            <FaInstagram className="w-8 h-8 group-hover:animate-pulse" />
           </button>
           <button
             onClick={() => handleSocialClick('facebook')}
-            className="text-cyan-400 hover:text-cyan-300 neon-glow group"
+            aria-label="Visit Facebook profile"
+            className="transition-transform text-cyan-400 hover:text-cyan-300 hover:scale-110 neon-glow group"
           >
-            <FaFacebook className="w-6 h-6 group-hover:animate-pulse" />
+            <FaFacebook className="w-8 h-8 group-hover:animate-pulse" />
           </button>
         </div>
+
+        {/* Copyright */}
+        <p className="text-xs text-gray-500 sm:text-sm">
+          © {new Date().getFullYear()} Rayen Chaaben. All rights reserved.
+        </p>
       </div>
     </footer>
   );
