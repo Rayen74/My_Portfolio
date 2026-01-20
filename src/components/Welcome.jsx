@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProfilePhoto from '../assets/Profile.jpg';
 import JCI from '../assets/JCI.mp4';
 import Yaj from '../assets/Yaj.mp4';
@@ -25,6 +25,27 @@ import CV from '../assets/CV.pdf';
 
 const Welcome = () => {
   const [redirect, setRedirect] = useState({ show: false, url: '', platform: '' });
+
+  // Disable right-click context menu
+  useEffect(() => {
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+      return false;
+    };
+
+    // Add event listener to the entire component
+    const container = document.querySelector('.welcome-container');
+    if (container) {
+      container.addEventListener('contextmenu', handleContextMenu);
+    }
+
+    // Cleanup
+    return () => {
+      if (container) {
+        container.removeEventListener('contextmenu', handleContextMenu);
+      }
+    };
+  }, []);
 
   const socialLinks = {
     github: 'https://github.com/Rayen74',
@@ -59,8 +80,57 @@ const Welcome = () => {
     setRedirect({ show: false, url: '', platform: '' });
   };
 
+  // Prevent context menu on specific elements
+  const preventContextMenu = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  };
+
   return (
-    <div className="relative overflow-hidden bg-gray-900">
+    <div 
+      className="relative overflow-hidden bg-gray-900 welcome-container"
+      onContextMenu={preventContextMenu}
+    >
+      <style>
+        {`
+          .welcome-container img, 
+          .welcome-container a, 
+          .welcome-container button,
+          .welcome-container video {
+            user-drag: none;
+            -webkit-user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+          }
+          /* Prevent text selection for most elements */
+          .welcome-container * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+          /* Allow text selection for description paragraphs only */
+          .welcome-container p {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+          }
+          /* Allow text selection for specific text spans */
+          .welcome-container span:not(.no-select) {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+          }
+        `}
+      </style>
+      
       <AnimatePresence>
         {redirect.show && (
           <Redirect
@@ -127,12 +197,14 @@ const Welcome = () => {
             <div className="flex flex-wrap items-center gap-3 mt-8 sm:gap-4 md:gap-6 sm:mt-10">
               <button
                 onClick={() => handleSocialClick('github')}
+                onContextMenu={preventContextMenu}
                 className="p-3 transition-all duration-300 bg-gray-800 border rounded-full sm:p-4 border-cyan-500/40 hover:bg-cyan-500/10 hover:border-cyan-400 group"
               >
                 <FaGithub className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-cyan-400 group-hover:text-cyan-300" />
               </button>
               <button
                 onClick={() => handleSocialClick('linkedin')}
+                onContextMenu={preventContextMenu}
                 className="p-3 transition-all duration-300 bg-gray-800 border rounded-full sm:p-4 border-cyan-500/40 hover:bg-cyan-500/10 hover:border-cyan-400 group"
               >
                 <FaLinkedinIn className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-cyan-400 group-hover:text-cyan-300" />
@@ -141,6 +213,7 @@ const Welcome = () => {
               <a
                 href={CV}
                 download="Rayen_Chaaben_CV.pdf"
+                onContextMenu={preventContextMenu}
                 className="flex items-center gap-2 px-4 py-2 text-xs font-bold transition-all duration-300 border rounded-full sm:gap-3 sm:px-6 sm:py-3 md:px-8 md:py-4 sm:text-sm md:text-base text-cyan-300 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 border-cyan-500/50 hover:from-cyan-500/40 hover:to-purple-600/40 hover:shadow-lg hover:shadow-cyan-500/20 group"
               >
                 <FaDownload className="w-4 h-4 sm:w-5 sm:h-5 group-hover:animate-bounce" />
@@ -161,6 +234,8 @@ const Welcome = () => {
               alt="Rayen Chaaben"
               className="object-cover border-4 rounded-full shadow-2xl w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 border-cyan-400 holo-effect"
               style={{ transform: 'scale(0.9)' }}
+              draggable="false"
+              onContextMenu={preventContextMenu}
             />
           </motion.div>
         </div>
@@ -239,12 +314,15 @@ const Welcome = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
                 className="flex flex-col items-center justify-center w-full p-4 transition-all border sm:p-6 bg-gray-800/80 border-cyan-500/30 rounded-xl hover:border-cyan-400 group"
+                onContextMenu={preventContextMenu}
               >
                 <img
                   src={tech.icon}
                   alt={`${tech.name} logo`}
                   className="object-contain w-12 h-12 mb-2 transition sm:w-14 sm:h-14 md:w-16 md:h-16 sm:mb-3 filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0"
                   style={{ transform: 'scale(0.9)' }}
+                  draggable="false"
+                  onContextMenu={preventContextMenu}
                 />
                 <p className="text-xs font-bold text-center sm:text-sm md:text-base text-cyan-300">
                   {tech.name}

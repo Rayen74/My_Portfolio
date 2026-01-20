@@ -115,6 +115,63 @@ const ProjectCard = ({
     }
   };
 
+  // Touch events for mobile
+  const handleTouchStart = (e) => {
+    if (zoom > 1) {
+      const touch = e.touches[0];
+      setIsDragging(true);
+      setDragStart({ 
+        x: touch.clientX - position.x, 
+        y: touch.clientY - position.y 
+      });
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (isDragging && zoom > 1) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      setPosition({
+        x: touch.clientX - dragStart.x,
+        y: touch.clientY - dragStart.y
+      });
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
+  // Pinch zoom for mobile
+  const [initialDistance, setInitialDistance] = useState(null);
+  
+  const handleTouchStartPinch = (e) => {
+    if (e.touches.length === 2) {
+      const distance = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      setInitialDistance(distance);
+    }
+  };
+
+  const handleTouchMovePinch = (e) => {
+    if (e.touches.length === 2 && initialDistance) {
+      const currentDistance = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      
+      if (currentDistance > initialDistance + 20) {
+        zoomIn();
+        setInitialDistance(currentDistance);
+      } else if (currentDistance < initialDistance - 20) {
+        zoomOut();
+        setInitialDistance(currentDistance);
+      }
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -128,6 +185,14 @@ const ProjectCard = ({
           @keyframes neon-pink-glow {
             0%, 100% { box-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 30px #FF00FF; }
             50% { box-shadow: 0 0 6px #FF00FF, 0 0 12px #FF00FF, 0 0 20px #FF00FF; }
+          }
+          img {
+            user-drag: none;
+            -webkit-user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
           }
         `}
       </style>
@@ -149,6 +214,7 @@ const ProjectCard = ({
             alt={title} 
             style={{ transform: 'scale(0.9)', transformOrigin: 'center' }} 
             className="object-cover w-full h-full rounded-t-2xl sm:rounded-t-3xl" 
+            draggable="false"
           />
         )}
 
@@ -288,7 +354,22 @@ const ProjectCard = ({
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseUp}
-                style={{ cursor: zoom > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default' }}
+                onTouchStart={(e) => {
+                  handleTouchStart(e);
+                  handleTouchStartPinch(e);
+                }}
+                onTouchMove={(e) => {
+                  handleTouchMove(e);
+                  handleTouchMovePinch(e);
+                }}
+                onTouchEnd={() => {
+                  handleTouchEnd();
+                  setInitialDistance(null);
+                }}
+                style={{ 
+                  cursor: zoom > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
+                  touchAction: 'none' 
+                }}
               >
                 <motion.img
                   key={currentIndex}
@@ -303,7 +384,7 @@ const ProjectCard = ({
                   src={galleryImages[currentIndex]}
                   alt={`Screenshot ${currentIndex + 1}`}
                   className="object-contain max-w-full max-h-full select-none"
-                  draggable={false}
+                  draggable="false"
                 />
 
                 {/* Navigation */}
@@ -335,7 +416,7 @@ const ProjectCard = ({
                 {zoom === 1 && (
                   <div className="absolute px-2 py-1 text-xs text-gray-400 transition-opacity -translate-x-1/2 rounded-lg sm:px-3 sm:py-2 sm:text-sm bg-black/70 top-3 sm:top-4 md:top-6 left-1/2 backdrop-blur">
                     <span className="hidden sm:inline">Use mouse wheel or +/- buttons to zoom • Drag to pan when zoomed</span>
-                    <span className="sm:hidden">Pinch to zoom</span>
+                    <span className="sm:hidden">Pinch to zoom • Drag to pan</span>
                   </div>
                 )}
               </div>

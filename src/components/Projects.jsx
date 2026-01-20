@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard from "./ProjectCard";
 import { FaSearch, FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-import JCI from "../assets/JCI.mp4";
-import Yaj from "../assets/Yaj.mp4";
+import JCI from "../assets/JCI.webm";
+import Yaj from "../assets/Yaj.webm";
 import FakeNewsPNG from "../assets/FakeNews.png";
 import Cancer from "../assets/Cancer.png";
 import TicketPriceJPG from "../assets/TicketPrice.jpg";
